@@ -8,9 +8,11 @@
 
 #import "SZWebViewController.h"
 #import <WebKit/WebKit.h>
+#import "SZWebProgress.h"
 
 @interface SZWebViewController ()<WKNavigationDelegate>
 @property (nonatomic, strong) WKWebView       *webView;
+@property (nonatomic, strong) SZWebProgress   *webProgress;
 @end
 
 @implementation SZWebViewController
@@ -27,8 +29,10 @@
 - (void)setupUI {
     [self setupNaigation];
     [self.view addSubview:self.webView];
-    
+    [self.navigationController.navigationBar.layer addSublayer:self.webProgress];
 }
+
+
 - (void)setupNaigation {
     self.navigationItem.title = self.navBarTitle;
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -39,9 +43,23 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
 }
 
+#pragma mark - WKNavigationDelegate
+- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation
+{
+    [self.webProgress startLoading];
+}
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation
+{
+    [self.webProgress finishedLoadingWithError:nil];
+}
+- (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error
+{
+    [self.webProgress finishedLoadingWithError:error];
+}
+
 #pragma mark - UI EVENT
 - (void)onBackItem:(UIButton *)btn {
-    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - GETTER
@@ -54,4 +72,24 @@
     return _webView;
 }
 
+- (SZWebProgress *)webProgress{
+    if (!_webProgress) {
+        _webProgress = [SZWebProgress webProgress];
+        _webProgress.frame = CGRectMake(0, self.navigationController.view.frame.size.height, SCR_W, 3);
+        _webProgress.strokeColor = self.progressColor.CGColor;
+        
+    }
+    return _webProgress;
+}
+#pragma mark - SETTER
+//- (void)setHtmlUrl:(NSString *)htmlUrl
+//{
+//    _htmlUrl = htmlUrl;
+//}
+#pragma mark - dealloc
+- (void)dealloc
+{
+    [self.webProgress cancelTimer];
+    [self.webProgress removeFromSuperlayer];
+}
 @end

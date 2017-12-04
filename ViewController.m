@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-
+#import "SZWebViewController.h"
 @interface ViewController ()
 
 @end
@@ -19,6 +19,15 @@
     // Do any additional setup after loading the view, typically from a nib.
 }
 
+- (IBAction)go:(id)sender {
+    
+    SZWebViewController *vc = [SZWebViewController new];
+    vc.htmlUrl = @"https://www.baidu.com";
+    vc.backItemPic = @"arrow_left";
+    vc.navBarTitle = @"WEB";
+    vc.progressColor = [UIColor redColor];
+    [self.navigationController pushViewController:vc animated:YES];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -16,7 +16,8 @@
 @property (nonatomic, copy) NSString *htmlUrl;
 /// 返回按钮图片
 @property (nonatomic, copy) NSString *backItemPic;
-//@property (nonatomic, copy) NSString *<#String#>;
+/// 进度条的颜色
+@property (nonatomic, strong) UIColor *progressColor;
 
 
 
