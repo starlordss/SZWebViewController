@@ -75,7 +75,7 @@
 - (SZWebProgress *)webProgress{
     if (!_webProgress) {
         _webProgress = [SZWebProgress webProgress];
-        _webProgress.frame = CGRectMake(0, self.navigationController.view.frame.size.height, SCR_W, 3);
+        _webProgress.frame = CGRectMake(0, self.navigationController.navigationBar.frame.size.height - Progress_H, SCR_W, Progress_H);
         _webProgress.strokeColor = self.progressColor.CGColor;
         
     }

@@ -42,21 +42,21 @@ static NSTimeInterval const ProgressTimeInterval = 0.03;
     [path moveToPoint:CGPointMake(0, Progress_H)];
     [path addLineToPoint:CGPointMake(SCR_W, Progress_H)];
     self.path = path.CGPath;
-    self.lineWidth = Progress_H;
     self.strokeEnd = 0;
     self.augmenter = 0.005;
+    self.lineWidth = Progress_H;
+    // default color
     self.strokeColor = [UIColor redColor].CGColor;
-
 }
 
 - (void)setupTimer {
-    _timer = [NSTimer scheduledTimerWithTimeInterval:ProgressTimeInterval target:self selector:@selector(progressPlus:) userInfo:nil repeats:YES];
+    _timer = [NSTimer scheduledTimerWithTimeInterval:ProgressTimeInterval target:self selector:@selector(rateOfProgress:) userInfo:nil repeats:YES];
     [_timer sz_pause];
 }
 
 
-- (void)progressPlus:(NSTimer *)timer {
-    self.strokeStart += _augmenter;
+- (void)rateOfProgress:(NSTimer *)timer {
+    self.strokeEnd += _augmenter;
     if (self.strokeEnd > 0.60) {
         _augmenter = 0.002;
     }

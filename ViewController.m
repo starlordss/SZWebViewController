@@ -22,7 +22,7 @@
 - (IBAction)go:(id)sender {
     
     SZWebViewController *vc = [SZWebViewController new];
-    vc.htmlUrl = @"https://www.baidu.com";
+    vc.htmlUrl = @"http://www.jianshu.com/p/c47c24ab1e76";
     vc.backItemPic = @"arrow_left";
     vc.navBarTitle = @"WEB";
     vc.progressColor = [UIColor redColor];
